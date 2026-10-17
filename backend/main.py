@@ -1,4 +1,4 @@
-
+import os
 import hashlib
 import uuid
 from pathlib import Path
@@ -34,7 +34,8 @@ from crypto_utils import encrypt_file, decrypt_file
 # ---------------------------------
 
 BASE_DIR = Path(__file__).resolve().parent
-VAULT_DIR = BASE_DIR / "vault_storage"
+DATA_DIR = Path(os.getenv("DATA_DIR", str(BASE_DIR)))
+VAULT_DIR = DATA_DIR / "vault_storage"
 MAX_FILE_SIZE = 10 * 1024 * 1024  # 10 MB
 
 VAULT_DIR.mkdir(exist_ok=True)
@@ -49,8 +50,14 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-    "http://localhost:5173",
-    "http://localhost:5174",],
+        "http://localhost:5173",
+        "http://localhost:5174",
+        *(
+            [os.getenv("FRONTEND_URL")]
+            if os.getenv("FRONTEND_URL")
+            else []
+        ),
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

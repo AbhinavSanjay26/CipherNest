@@ -30,11 +30,35 @@ function readableSize(value) {
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
   return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
 }
+
 function readableDate(value) {
   if (!value) return "—";
-  const date = new Date(value);
-  return Number.isNaN(date.getTime()) ? String(value) : date.toLocaleString();
+
+  let timestamp = String(value);
+
+  // SQLAlchemy may return UTC timestamps without a timezone suffix.
+  // Treat these timezone-naive API timestamps as UTC.
+  if (
+    /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?$/.test(timestamp)
+  ) {
+    timestamp += "Z";
+  }
+
+  const date = new Date(timestamp);
+
+  return Number.isNaN(date.getTime())
+    ? String(value)
+    : date.toLocaleString("en-IN", {
+        timeZone: "Asia/Kolkata",
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      });
 }
+
 function initials(value) {
   return (value || "U").slice(0, 1).toUpperCase();
 }
