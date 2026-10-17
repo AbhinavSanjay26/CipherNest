@@ -1,0 +1,25 @@
+.env
+.env.*
+!.env.example
+**/venv/
+**/__pycache__/
+*.py[cod]
+**/vault.db
+**/vault_storage/
+**/vault_metadata.json
+*.bak
+*.deleting
+**/models_backup.py
+**/main_backup.py
+**/node_modules/
+**/dist/
+.vscode/
+.DS_Store
+Thumbs.db
+
+Users.txt
+DELETE TEST FILE.txt
+SECURE FILE VAULT - ENCRYPTION TEST.txt
+TAMPER TEST FILE.txt
+TEST FILE.txt
+UPLOAD TEST FILE.txt

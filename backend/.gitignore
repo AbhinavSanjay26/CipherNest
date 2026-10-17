@@ -1,0 +1,26 @@
+
+# Environment variables and secrets
+.env
+
+# Python virtual environment
+venv/
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# Database and metadata
+vault.db
+vault_metadata.json
+
+# Stored encrypted files
+vault_storage/
+
+# Backup files
+*.bak
+*.deleting
+
+# Environment and editor files
+.env.*
+!.env.example
+.vscode/
